@@ -116,10 +116,10 @@ async function resolveTopBuyers(
   }
 
   // TOP購入者の判定
-  for (const [illustId, byBuyer] of countMap.entries()) {
+  for (const [illustId, byBuyer] of Array.from(countMap.entries())) {
     let topId = ''
     let topCount = 0
-    for (const [buyerId, count] of byBuyer.entries()) {
+    for (const [buyerId, count] of Array.from(byBuyer.entries())) {
       if (count > topCount) {
         topCount = count
         topId = buyerId

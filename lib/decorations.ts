@@ -22,10 +22,20 @@ export async function getActiveDecorations(
 
   if (error || !data) return {}
 
+  type ActiveDecorationQueryRow = {
+    slot: DecorationSlot
+    decoration: Decoration | Decoration[] | null
+  }
+
+  const rows = data as unknown as ActiveDecorationQueryRow[]
   const result: ActiveDecorations = {}
-  for (const row of data as Array<{ slot: DecorationSlot; decoration: Decoration }>) {
-    if (row.decoration?.is_active) {
-      result[row.slot] = row.decoration
+
+  for (const row of rows) {
+    const decoration = Array.isArray(row.decoration)
+      ? row.decoration[0]
+      : row.decoration
+    if (decoration?.is_active) {
+      result[row.slot] = decoration
     }
   }
   return result
