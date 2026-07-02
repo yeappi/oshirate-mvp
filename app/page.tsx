@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation'
 import { getUser, getProfile } from '@/lib/auth'
 import { getIllustrationCards } from '@/lib/illustrations'
 import { getActiveDecorations } from '@/lib/decorations'
@@ -10,7 +11,7 @@ import BottomNav from '@/components/layout/BottomNav'
 
 export default async function HomePage() {
   const user = await getUser()
-  if (!user) return null
+  if (!user) redirect('/login')
 
   const [profile, cards, activeDecorations, unreadCount] = await Promise.all([
     getProfile(user.id),
